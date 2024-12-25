@@ -19,7 +19,6 @@ function App() {
   };
 
   return (
-
     <div className="app-container">
       <header className="app-header">
         <img src={logo} className="app-logo" alt="Logo" />
@@ -34,7 +33,6 @@ function App() {
         <p className="date-display">Selected Date: {date.toDateString()}</p>
       </main>
     </div>
-
   );
 }
 

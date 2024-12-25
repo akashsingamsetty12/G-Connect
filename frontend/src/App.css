@@ -26,7 +26,6 @@
   background-size: contain;
   border-radius: 10px;
   border-color: #3498db;
-  /* Removed animation */
 }
 
 .app-title {
@@ -52,4 +51,38 @@
   color: #333;
   margin-top: 10px;
   grid-column: 1 / 3; /* Span across both columns */
+}
+
+.auth-buttons {
+  margin-top: 20px;
+}
+
+.auth-buttons form,
+.auth-buttons button {
+  display: inline-block;
+  margin: 5px;
+}
+
+.auth-buttons input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.auth-button {
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background-color: #2980b9;
+}
+
+.admin-message {
+  color: red;
+  font-weight: bold;
 }
