@@ -1,21 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express from 'express';
+import { connect, Schema, model } from 'mongoose';
+import { json } from 'body-parser';
+import cors from 'cors';
+import { config } from 'dotenv';
 
 // Load environment variables from .env file
-dotenv.config();
+config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('MongoDB connection error:', err));
 
 // Event Schema
-const eventSchema = new mongoose.Schema({
+const eventSchema = new Schema({
   event: { type: String, required: true },
   date: { type: String, required: true },
   time: { type: String, required: true },
@@ -31,7 +31,7 @@ const eventSchema = new mongoose.Schema({
   theme: { type: String, required: true },
 });
 
-const Event = mongoose.model('Event', eventSchema);
+const Event = model('Event', eventSchema);
 
 // Routes
 app.get('/', (req, res) => {
@@ -51,7 +51,7 @@ app.get('/events', async (req, res) => {
     const events = await Event.find(filter);
     res.status(200).json(events);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch events' });
+    res.status(500).json({ error: 'Failed to fetch events', details: err.message });
   }
 });
 
@@ -69,11 +69,27 @@ app.post('/events', async (req, res) => {
 
     res.status(201).json(newEvent);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to add event' });
+    res.status(500).json({ error: 'Failed to add event', details: err.message });
   }
 });
 
-// Start server
+// Delete an event
+app.delete('/events/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedEvent = await Event.findByIdAndDelete(id);
+
+    if (!deletedEvent) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.status(200).json({ message: 'Event deleted successfully', deletedEvent });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete event', details: err.message });
+  }
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
