@@ -1,0 +1,30 @@
+/* EventList.css */
+.event-list {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    text-align: left;
+    width: 80%;
+    max-width: 600px;
+    background-color: #e6f7ff; /* Change background color */
+  }
+  
+  .event-list h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .event-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .event-list li {
+    background: #f0f0f0;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
